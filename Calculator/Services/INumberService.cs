@@ -2,6 +2,6 @@
 {
     public interface INumberService
     {
-        List<int> ParseNumbers(string input);
+        IEnumerable<int> ParseNumbers(string input);
     }
 }

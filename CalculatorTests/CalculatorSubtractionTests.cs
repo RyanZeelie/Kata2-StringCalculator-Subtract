@@ -4,7 +4,7 @@ using NSubstitute;
 
 namespace CalculatorTests
 {
-    public class Tests
+    public class CalculatorSubtractionTests
     {
         private INumberService _mockNumberService;
         private StringCalculator _calculator; 
@@ -45,6 +45,37 @@ namespace CalculatorTests
 
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_AnUnkownAmountOfNumbers_WHEN_SubtractingStringNumbers_SHOULD_SubtractNumbers()
+        {
+            // Arrange
+            var rndm = new Random();
+            var randomAmountOfNumbersBetween1And10 = Enumerable.Range(1, rndm.Next(10));
+
+            var input = string.Join(",", randomAmountOfNumbersBetween1And10);
+            var expectedResult = GetSubtractionResult(randomAmountOfNumbersBetween1And10);
+
+            _mockNumberService.ParseNumbers(input).Returns(randomAmountOfNumbersBetween1And10);
+
+            // Act
+            var result = _calculator.Subtract(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        private int GetSubtractionResult(IEnumerable<int> listOfNumbers)
+        {
+            var subtractionResult = 0;
+
+            foreach (var number in listOfNumbers)
+            {
+                subtractionResult -= number;
+            }
+
+            return subtractionResult;
         }
     }
 }

@@ -4,7 +4,7 @@
     {
         public string[] _delimiters = new string[] { "," };
 
-        public List<int> ParseNumbers(string input)
+        public IEnumerable<int> ParseNumbers(string input)
         {
             var splitNumbers = input.Split(_delimiters, StringSplitOptions.RemoveEmptyEntries);
 
@@ -13,7 +13,7 @@
             return parsedNumbers;
         }
 
-        private List<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
+        private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
             var listOfNumbers = new List<int>();  
 
