@@ -70,7 +70,7 @@ namespace CalculatorTests
         public void GIVEN_StringNumbersSeperatedByNewLine_WHEN_SubtractingStringNumbers_SHOULD_SubtractNumbers()
         {
             // Arrange
-            var input = "1,2,3";
+            var input = "1\n2\n3";
             var expectedResult = -6;
 
             _mockNumberService.ParseNumbers(input).Returns(new List<int>() { 1, 2, 3 });
