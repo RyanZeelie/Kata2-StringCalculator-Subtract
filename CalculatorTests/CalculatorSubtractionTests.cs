@@ -17,7 +17,7 @@ namespace CalculatorTests
         }
 
         [Test]
-        public void GIVEN_ListOfStringNumbers_WHEN_SubtractingStringNumbers_SHOULD_SubtractNumbers()
+        public void GIVEN_StringNumbersSeperatedByComma_WHEN_SubtractingStringNumbers_SHOULD_SubtractNumbers()
         {
             // Arrange
             var input = "1,2,3";
@@ -58,6 +58,22 @@ namespace CalculatorTests
             var expectedResult = GetSubtractionResult(randomAmountOfNumbersBetween1And10);
 
             _mockNumberService.ParseNumbers(input).Returns(randomAmountOfNumbersBetween1And10);
+
+            // Act
+            var result = _calculator.Subtract(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_StringNumbersSeperatedByNewLine_WHEN_SubtractingStringNumbers_SHOULD_SubtractNumbers()
+        {
+            // Arrange
+            var input = "1,2,3";
+            var expectedResult = -6;
+
+            _mockNumberService.ParseNumbers(input).Returns(new List<int>() { 1, 2, 3 });
 
             // Act
             var result = _calculator.Subtract(input);

@@ -2,7 +2,7 @@
 {
     public class NumberService : INumberService
     {
-        public string[] _delimiters = new string[] { "," };
+        public string[] _delimiters = new string[] { ",", "\n" };
 
         public IEnumerable<int> ParseNumbers(string input)
         {
