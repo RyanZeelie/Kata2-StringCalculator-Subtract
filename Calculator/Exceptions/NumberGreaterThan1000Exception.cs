@@ -4,8 +4,8 @@
     {
         public NumberGreaterThan1000Exception() { }
 
-        public NumberGreaterThan1000Exception(List<int> invalidNumbers)
-            : base(String.Format($"The following numbers were greater than 1000 : {string.Join(", ", invalidNumbers)}"))
+        public NumberGreaterThan1000Exception(List<int> numbersGreaterThan1000)
+            : base(String.Format($"The following numbers were greater than 1000 : {string.Join(", ", numbersGreaterThan1000)}"))
         {
 
         }

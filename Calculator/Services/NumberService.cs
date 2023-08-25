@@ -96,7 +96,7 @@ namespace Calculator.Services
 
         private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
-            var negativeNumbers = new List<int>();  
+            var numbersGreaterThan1000 = new List<int>();  
 
             var numbersWithLettersReplaced = FindAndReplaceLetters(stringOfNumbers.ToList());
 
@@ -108,15 +108,15 @@ namespace Calculator.Services
 
                 if (parsedNumber > 1000)
                 {
-                    negativeNumbers.Add(parsedNumber);
+                    numbersGreaterThan1000.Add(parsedNumber);
                 }
 
                 listOfNumbers.Add(parsedNumber > 0 ? parsedNumber : parsedNumber * -1);
             }
 
-            if (negativeNumbers.Count > 0)
+            if (numbersGreaterThan1000.Count > 0)
             {
-                throw new NumberGreaterThan1000Exception(negativeNumbers);
+                throw new NumberGreaterThan1000Exception(numbersGreaterThan1000);
             }
 
             return listOfNumbers;
