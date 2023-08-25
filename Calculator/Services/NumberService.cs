@@ -10,33 +10,44 @@
 
         public IEnumerable<int> ParseNumbers(string input)
         {
-            var stringNumbers = GetStringNumbers(input);
+               
+            var stringNumbers = GetNumbers(input);
 
             var parsedNumbers = ValidateAndParseNumbers(stringNumbers);
 
             return parsedNumbers;
         }
 
-        private string[] GetStringNumbers(string input)
+        private IEnumerable<string> GetNumbers(string input)
         {
             if (input.StartsWith(DelimiterIndicator))
             {
-                var splitByNewLine = input.Replace(DelimiterIndicator,string.Empty).Split(DelimiterSeperator, StringSplitOptions.RemoveEmptyEntries);
+                GetCustomDelimiters(input);
 
-                SetDelimitiers(splitByNewLine[0].Split(DelimiterSurroundings,StringSplitOptions.RemoveEmptyEntries));
-
-                return splitByNewLine[1].Split(_delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
+                return GetNumbersSeperatedByCustomDelimiters(input);
             }
-
-            return input.Split(_delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
+           
+            return input.Split(_delimiters.ToArray(),StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private void SetDelimitiers(string[] delimiters)
+        private void GetCustomDelimiters(string input)
         {
+            var delimiterStartIndex = 2;
+            var delimiterEndIndex = input.IndexOf(DelimiterSeperator) - 2;
+
+            var delimiters = input.Substring(delimiterStartIndex, delimiterEndIndex).Split(DelimiterSurroundings, StringSplitOptions.RemoveEmptyEntries);
+
             foreach (var delimiter in delimiters)
             {
                 _delimiters.Add(delimiter);
             }
+        }
+
+        private IEnumerable<string> GetNumbersSeperatedByCustomDelimiters(string inputString)
+        {
+            var numbersStartIndex = inputString.IndexOf(DelimiterSeperator) + 1;
+
+            return inputString.Substring(numbersStartIndex).Split(_delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
         }
 
         private List<string> FindAndReplaceLetters(List<string> stringOfNumbers)
@@ -61,8 +72,18 @@
             return newListOfNumbers;
         }
 
+        private void ThrowNumberGreaterThan1000Exception(List<int> negativeNumbers)
+        {
+            if (negativeNumbers.Count > 0)
+            {
+                throw new Exception($"The following numbers were greater than 1000 : {string.Join(", ", negativeNumbers)}");
+            }
+        }
+
         private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
+            var negativeNumbers = new List<int>();  
+
             var numbersWithLettersReplaced = FindAndReplaceLetters(stringOfNumbers.ToList());
 
             var listOfNumbers = new List<int>();  
@@ -71,8 +92,15 @@
             {
                 var parsedNumber = int.Parse(number);
 
+                if (parsedNumber > 1000)
+                {
+                    negativeNumbers.Add(parsedNumber);
+                }
+
                 listOfNumbers.Add(parsedNumber > 0 ? parsedNumber : parsedNumber * -1);
             }
+
+            ThrowNumberGreaterThan1000Exception(negativeNumbers);
 
             return listOfNumbers;
         }
