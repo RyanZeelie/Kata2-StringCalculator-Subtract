@@ -7,6 +7,7 @@ namespace Calculator
         private readonly INumberService _numberService;
 
         private const int DefaultValue = 0;
+
         public StringCalculator(INumberService numberService)
         {
             _numberService = numberService;

@@ -42,11 +42,12 @@ namespace CalculatorTests
             Assert.That(expectedResult, Is.EqualTo(result));
         }
 
+        [TestCase("##%\n1%2%3")]
+        [TestCase("####\n1##2##3")]
         [Test]
-        public void GIVEN_StringOfNumbersSeperatedByCustomDelimiter_WHEN_ParsingNumbers_RETURNS_ListOfNumbersAsInt()
+        public void GIVEN_StringOfNumbersSeperatedByCustomDelimiter_WHEN_ParsingNumbers_RETURNS_ListOfNumbersAsInt(string input)
         {
             // Arrange
-            var input = "##%\n1%2%3";
             var expectedResult = new List<int>() { 1, 2, 3 };
 
             // Act
@@ -154,11 +155,13 @@ namespace CalculatorTests
             Assert.That(exception.Message, Is.EqualTo(expectedResult));
         }
 
+        [TestCase("<{>}##{%}\n2%3%4")]
+        [TestCase("<[>}##[%}\n2%3%4")]
+        [TestCase("<>><##>%<\n2%3%4")]
         [Test]
-        public void GIVEN_CustomDelimiterSeperators_WHEN_SubtractingStringNumbers_RETURNS_ListOfNumbersAsInt()
+        public void GIVEN_CustomDelimiterSeperators_WHEN_SubtractingStringNumbers_RETURNS_ListOfNumbersAsInt(string input)
         {
             // Arrange
-            var input = "<{>}##{%}\n2%3%4";
             var expectedResult = new List<int>() { 2, 3, 4 };
 
             // Act
