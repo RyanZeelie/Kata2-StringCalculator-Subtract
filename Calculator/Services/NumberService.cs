@@ -3,10 +3,11 @@
     public class NumberService : INumberService
     {
         private List<string> _delimiters = new List<string>() { ",", "\n"};
+        private string[] _delimiterIdentifiers = new string[] { "[", "]", "][" };
 
         private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "##";
-        private string[] DelimiterSurroundings = new string[] { "[", "]", "][" };
+        private const string CustomDelimiterIdentifierIndicator = "<";
 
         public IEnumerable<int> ParseNumbers(string input)
         {
@@ -20,7 +21,7 @@
 
         private IEnumerable<string> GetNumbers(string input)
         {
-            if (input.StartsWith(DelimiterIndicator))
+            if (input.StartsWith(DelimiterIndicator) || input.StartsWith(CustomDelimiterIdentifierIndicator))
             {
                 GetCustomDelimiters(input);
 
@@ -32,15 +33,28 @@
 
         private void GetCustomDelimiters(string input)
         {
+            if (input.StartsWith(CustomDelimiterIdentifierIndicator))
+            {
+                ReplaceDefaultDelimiterIdentifiers(input);
+            }
+
             var delimiterStartIndex = 2;
             var delimiterEndIndex = input.IndexOf(DelimiterSeperator) - 2;
 
-            var delimiters = input.Substring(delimiterStartIndex, delimiterEndIndex).Split(DelimiterSurroundings, StringSplitOptions.RemoveEmptyEntries);
+            var delimiters = input.Substring(delimiterStartIndex, delimiterEndIndex).Split(_delimiterIdentifiers, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var delimiter in delimiters)
             {
                 _delimiters.Add(delimiter);
             }
+        }
+
+        private void ReplaceDefaultDelimiterIdentifiers(string input)
+        {
+            var newDelimiterIdentifiersStartCharacter = input[1].ToString();
+            var newDelimiterIdentifiersEndCharacter = input[3].ToString();
+
+            _delimiterIdentifiers = new string[] { newDelimiterIdentifiersStartCharacter, newDelimiterIdentifiersEndCharacter, $"{newDelimiterIdentifiersEndCharacter}{newDelimiterIdentifiersStartCharacter}" };
         }
 
         private IEnumerable<string> GetNumbersSeperatedByCustomDelimiters(string inputString)

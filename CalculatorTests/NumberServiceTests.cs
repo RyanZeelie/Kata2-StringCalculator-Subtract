@@ -157,5 +157,19 @@ namespace CalculatorTests
             // Assert
             Assert.That(exception.Message, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        public void GIVEN_CustomDelimiterSeperators_WHEN_SubtractingStringNumbers_RETURNS_ListOfNumbersAsInt()
+        {
+            // Arrange
+            var input = "<{>}##{%}\n2%3%4";
+            var expectedResult = new List<int>() { 2, 3, 4 };
+
+            // Act
+            var result = _numberService.ParseNumbers(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
     }
 }
