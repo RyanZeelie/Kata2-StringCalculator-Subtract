@@ -1,4 +1,5 @@
-﻿using Calculator.Exceptions;
+﻿using Calculator.Enums;
+using Calculator.Exceptions;
 
 namespace Calculator.Services
 {
