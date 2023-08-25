@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Calculator.Exceptions;
 using Calculator.Services;
 
 namespace CalculatorTests
@@ -152,7 +148,7 @@ namespace CalculatorTests
             var expectedResult = "The following numbers were greater than 1000 : 1001, 1002";
 
             // Act
-            var exception = Assert.Throws<Exception>(() => _numberService.ParseNumbers(input));
+            var exception = Assert.Throws<NumberGreaterThan1000Exception>(() => _numberService.ParseNumbers(input));
 
             // Assert
             Assert.That(exception.Message, Is.EqualTo(expectedResult));

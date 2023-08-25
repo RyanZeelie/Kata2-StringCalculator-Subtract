@@ -1,4 +1,6 @@
-﻿namespace Calculator.Services
+﻿using Calculator.Exceptions;
+
+namespace Calculator.Services
 {
     public class NumberService : INumberService
     {
@@ -11,7 +13,6 @@
 
         public IEnumerable<int> ParseNumbers(string input)
         {
-               
             var stringNumbers = GetNumbers(input);
 
             var parsedNumbers = ValidateAndParseNumbers(stringNumbers);
@@ -54,7 +55,13 @@
             var newDelimiterIdentifiersStartCharacter = input[1].ToString();
             var newDelimiterIdentifiersEndCharacter = input[3].ToString();
 
-            _delimiterIdentifiers = new string[] { newDelimiterIdentifiersStartCharacter, newDelimiterIdentifiersEndCharacter, $"{newDelimiterIdentifiersEndCharacter}{newDelimiterIdentifiersStartCharacter}" };
+            _delimiterIdentifiers = 
+                new string[] 
+                { 
+                    newDelimiterIdentifiersStartCharacter,
+                    newDelimiterIdentifiersEndCharacter,
+                    $"{newDelimiterIdentifiersEndCharacter}{newDelimiterIdentifiersStartCharacter}" 
+                };
         }
 
         private IEnumerable<string> GetNumbersSeperatedByCustomDelimiters(string inputString)
@@ -86,14 +93,6 @@
             return newListOfNumbers;
         }
 
-        private void ThrowNumberGreaterThan1000Exception(List<int> negativeNumbers)
-        {
-            if (negativeNumbers.Count > 0)
-            {
-                throw new Exception($"The following numbers were greater than 1000 : {string.Join(", ", negativeNumbers)}");
-            }
-        }
-
         private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
             var negativeNumbers = new List<int>();  
@@ -114,7 +113,10 @@
                 listOfNumbers.Add(parsedNumber > 0 ? parsedNumber : parsedNumber * -1);
             }
 
-            ThrowNumberGreaterThan1000Exception(negativeNumbers);
+            if (negativeNumbers.Count > 0)
+            {
+                throw new NumberGreaterThan1000Exception(negativeNumbers);
+            }
 
             return listOfNumbers;
         }
