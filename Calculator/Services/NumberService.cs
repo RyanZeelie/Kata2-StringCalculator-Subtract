@@ -63,15 +63,15 @@
 
         private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
-            var numbersWithLettersRemoved = FindAndReplaceLetters(stringOfNumbers.ToList());
+            var numbersWithLettersReplaced = FindAndReplaceLetters(stringOfNumbers.ToList());
 
             var listOfNumbers = new List<int>();  
 
-            foreach (var number in numbersWithLettersRemoved)
+            foreach (var number in numbersWithLettersReplaced)
             {
                 var parsedNumber = int.Parse(number);
 
-                listOfNumbers.Add(parsedNumber);
+                listOfNumbers.Add(parsedNumber > 0 ? parsedNumber : parsedNumber * -1);
             }
 
             return listOfNumbers;
