@@ -87,5 +87,47 @@ namespace CalculatorTests
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
         }
+
+        [Test]
+        public void GIVEN_Letters_WHEN_ParsingNumbers_SHOULD_ReplaceLettersWithNumbers()
+        {
+            // Arrange
+            var input = "a,b,c,d,e,f,g,h,i,j";
+            var expectedResult = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            // Act
+            var result = _numberService.ParseNumbers(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_LettersOutOfSpecRange_WHEN_ParsingNumbers_SHOULD_IgnoreLetters()
+        {
+            // Arrange
+            var input = "k,l,m";
+            var expectedResult = new List<int>() { };
+
+            // Act
+            var result = _numberService.ParseNumbers(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_LettersAndNumbers_WHEN_ParsingNumbers_SHOULD_ReplaceLettersWithNumbers()
+        {
+            // Arrange
+            var input = "1,c,3";
+            var expectedResult = new List<int>() { 1, 2, 3 };
+
+            // Act
+            var result = _numberService.ParseNumbers(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
     }
 }

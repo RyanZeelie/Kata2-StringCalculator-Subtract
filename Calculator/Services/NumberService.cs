@@ -39,11 +39,35 @@
             }
         }
 
+        private List<string> FindAndReplaceLetters(List<string> stringOfNumbers)
+        {
+            var newListOfNumbers = new List<string>(stringOfNumbers);
+            
+            foreach (var item in stringOfNumbers)
+            {
+                if (Enum.TryParse(item, true, out LetterMapEnum numericalResult))
+                {
+                    var index = stringOfNumbers.IndexOf(item);
+                    int letterValue = (int)numericalResult;
+
+                    newListOfNumbers[index] = letterValue.ToString();
+                }
+                else
+                {
+                    newListOfNumbers.Remove(item);
+                }
+            }
+
+            return newListOfNumbers;
+        }
+
         private IEnumerable<int> ValidateAndParseNumbers(IEnumerable<string> stringOfNumbers)
         {
+            var numbersWithLettersRemoved = FindAndReplaceLetters(stringOfNumbers.ToList());
+
             var listOfNumbers = new List<int>();  
 
-            foreach (var number in stringOfNumbers)
+            foreach (var number in numbersWithLettersRemoved)
             {
                 var parsedNumber = int.Parse(number);
 
