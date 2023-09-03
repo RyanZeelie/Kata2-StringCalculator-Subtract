@@ -1,5 +1,4 @@
 ﻿using Calculator.Services.Delimiters;
-
 namespace Calculator.Services.Numbers
 {
     public class SubtractionNumberService : INumberService
@@ -18,7 +17,9 @@ namespace Calculator.Services.Numbers
         {
             var numbersWithoutDelimiters = RemoveDelimitersFromInputString(inputString);
 
-            var listOfIntNumbers = ParseNumbersToInt(numbersWithoutDelimiters);
+            var validatedNumbers = ValidateNumbers(numbersWithoutDelimiters);
+
+            var listOfIntNumbers = ParseNumbersToInt(validatedNumbers);
 
             return listOfIntNumbers;
         }
@@ -38,7 +39,31 @@ namespace Calculator.Services.Numbers
             return inputString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private List<int> ParseNumbersToInt(string[] numbers)
+        private List<string> ValidateNumbers(string[] numbers)
+        {
+            var numbersWithLettersRemoved = ReplaceLetters(numbers);
+
+            return numbersWithLettersRemoved;
+        }
+
+        private List<string> ReplaceLetters(string[] numbers)
+        {
+            var listOfNumbers = new List<string>();
+
+            foreach (var numberItem in numbers)
+            {
+                var letterAsNumericalValue = char.ToLower(char.Parse(numberItem)) - 'a'; ;
+
+                if (letterAsNumericalValue >= 0 && letterAsNumericalValue < 10)
+                {
+                    listOfNumbers.Add(letterAsNumericalValue.ToString());
+                };
+            }
+
+            return listOfNumbers;
+        }
+
+        private List<int> ParseNumbersToInt(List<string> numbers)
         {
             var listOfNumbers = new List<int>();
 

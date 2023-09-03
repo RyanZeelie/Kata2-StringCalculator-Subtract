@@ -70,5 +70,19 @@ namespace CalculatorTests
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
         }
+
+        [Test]
+        public void GIVEN_Letters_WHEN_ParsingNumbers_SHOULD_ReplaceLettersWithNumbers()
+        {
+            // Arrange
+            var input = "k,a,b,c,d,e,f,g,h,i,j,k";
+            var expectedResult = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            // Act
+            var result = _numberService.ParseNumbers(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(result));
+        }
     }
 }
