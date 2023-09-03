@@ -1,5 +1,6 @@
 using Calculator.Enums;
 using Calculator.Factories;
+using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
 namespace CalculatorTests
@@ -12,7 +13,8 @@ namespace CalculatorTests
         [SetUp]
         public void Setup()
         {
-            _numberServiceFactory = new NumberServiceFactory(); 
+            var delimiterService = new DelimiterService();
+            _numberServiceFactory = new NumberServiceFactory(delimiterService); 
         }
 
         [Test]

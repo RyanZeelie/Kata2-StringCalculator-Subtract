@@ -11,8 +11,8 @@ namespace CalculatorTests
         [SetUp]
         public void Setup()
         {
-            var additionDelimitierService = new AdditionDelimiterService();
-            _numberService = new AdditionNumberService(additionDelimitierService);
+            var delimiterService = new DelimiterService();
+            _numberService = new AdditionNumberService(delimiterService);
         }
 
         [TestCase("1,2,3")]

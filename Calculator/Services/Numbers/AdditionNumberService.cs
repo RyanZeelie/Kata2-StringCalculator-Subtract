@@ -25,7 +25,7 @@ namespace Calculator.Services.Numbers
 
         private string[] RemoveDelimitersFromInputString(string inputString)
         {
-            var delimiters = _delimiterService.GetDelimiters(inputString);
+            var delimiters = _delimiterService.GetDelimiters(inputString, DelimiterIndicator);
 
             if (inputString.StartsWith(DelimiterIndicator))
             {

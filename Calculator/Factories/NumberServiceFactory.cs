@@ -6,28 +6,21 @@ namespace Calculator.Factories
 {
     public class NumberServiceFactory : INumberServiceFactory
     {
+        private readonly IDelimiterService _delimiterService;
+
+        public NumberServiceFactory(IDelimiterService delimiterService)
+        {
+            _delimiterService  = delimiterService;
+        }
+
         public INumberService CreateNumberService(Operations operation)
         {
             return operation switch
             {
-                Operations.Add => InstantiateAdditionNumberServiceInstanceAndInjectDelimiterService(),
-                Operations.Subtract => InstantiateSubtractionNumberServiceInstanceAndInjectDelimiterService(),
+                Operations.Add => new AdditionNumberService(_delimiterService),
+                Operations.Subtract => new SubtractionNumberService(_delimiterService),
                 _ => throw new Exception("Invalid operation")
             };
-        }
-
-        private INumberService InstantiateAdditionNumberServiceInstanceAndInjectDelimiterService()
-        {
-            var additionDelimiterService = new AdditionDelimiterService();
-
-            return new AdditionNumberService(additionDelimiterService);
-        }
-
-        private INumberService InstantiateSubtractionNumberServiceInstanceAndInjectDelimiterService()
-        {
-            var subtractionDelimiterService = new SubtractionDelimiterService();
-
-            return new SubtractionNumberService(subtractionDelimiterService);
         }
     }
 }

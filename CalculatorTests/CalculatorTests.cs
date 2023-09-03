@@ -1,5 +1,6 @@
 ﻿using Calculator;
 using Calculator.Factories;
+using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 using NSubstitute;
 
@@ -14,7 +15,8 @@ namespace CalculatorTests
         [SetUp] 
         public void SetUp() 
         {
-            _numberServiceFactory = new NumberServiceFactory();
+            var delimiterService = new DelimiterService();
+            _numberServiceFactory = new NumberServiceFactory(delimiterService);
             _calculator = new StringCalculator(_numberServiceFactory);
         }
 

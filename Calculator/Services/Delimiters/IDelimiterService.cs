@@ -2,6 +2,6 @@
 {
     public interface IDelimiterService
     {
-        string[] GetDelimiters(string inputString);
+        string[] GetDelimiters(string inputString, string delimiterIndicator);
     }
 }

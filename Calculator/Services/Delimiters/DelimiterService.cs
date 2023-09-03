@@ -1,15 +1,14 @@
 ﻿namespace Calculator.Services.Delimiters
 {
-    public class AdditionDelimiterService : IDelimiterService
+    public class DelimiterService : IDelimiterService
     {
         private const string DelimiterSeperator = "\n";
-        private const string DelimiterIndicator = "//";
 
-        public string[] GetDelimiters(string inputString)
+        public string[] GetDelimiters(string inputString, string delimiterIndicator)
         {
             var delimiters = new List<string> { ",", "\n" };
 
-            if (inputString.StartsWith(DelimiterIndicator))
+            if (inputString.StartsWith(delimiterIndicator))
             {
                 var customDelimiters = GetCustomDelimiters(inputString);
                 delimiters.AddRange(customDelimiters);
