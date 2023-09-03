@@ -9,6 +9,7 @@ namespace Calculator.Services.Numbers
 
         private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "##";
+        private const string CustomSeperatorIndicator = "<";
         private const int MaximumNumber = 1000;
 
         public SubtractionNumberService(IDelimiterService delimiterService)
@@ -29,7 +30,7 @@ namespace Calculator.Services.Numbers
         {
             var delimiters = _delimiterService.GetDelimiters(inputString, DelimiterIndicator);
 
-            if (inputString.StartsWith(DelimiterIndicator))
+            if (inputString.StartsWith(DelimiterIndicator) || inputString.StartsWith(CustomSeperatorIndicator))
             {
                 var startIndexOfnumbers = inputString.IndexOf(DelimiterSeperator) + 1;
                 var numberSectionOfstring = inputString.Substring(startIndexOfnumbers);
