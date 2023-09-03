@@ -18,7 +18,7 @@
             return delimiters.ToArray();
         }
 
-        private string[] GetCustomDelimiters(string input, string delimiterIndicator)
+        private List<string> GetCustomDelimiters(string input, string delimiterIndicator)
         {
             var delimiterIdenitifiers = new List<string>() { "[", "]", "][" };
 
@@ -37,7 +37,7 @@
 
             var delimiters = delimiterSectionOfInputString.Split(delimiterIdenitifiers.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            return delimiters.ToArray();
+            return delimiters.ToList();
         }
 
         private List<string> ReplaceDefaultDelimiterIdentifiers(string input)

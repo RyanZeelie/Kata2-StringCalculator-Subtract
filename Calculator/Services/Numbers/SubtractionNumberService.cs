@@ -45,16 +45,18 @@ namespace Calculator.Services.Numbers
         {
             var validatedNumbers = ReplaceLetters(numbers);
 
-            var parseNumbers = ParseNumbersToInt(validatedNumbers);
+            var parsedNumbers = ParseNumbersToInt(validatedNumbers);
 
-            CheckForNumbersGreaterThan1000(parseNumbers);
+            CheckForNumbersGreaterThan1000(parsedNumbers);
 
-            return parseNumbers;
+            var allPositiveNumbers = InvertNegatives(parsedNumbers);
+
+            return allPositiveNumbers;
         }
 
         private List<string> ReplaceLetters(string[] numbers)
         {
-            var listOfNumbers = new List<string>();
+            var listOfNumbersWithLettersReplaced = new List<string>();
 
             foreach (var numberItem in numbers)
             {
@@ -66,16 +68,16 @@ namespace Calculator.Services.Numbers
 
                     if (letterAsNumericalValue >= 0 && letterAsNumericalValue < 10)
                     {
-                        listOfNumbers.Add(letterAsNumericalValue.ToString());
+                        listOfNumbersWithLettersReplaced.Add(letterAsNumericalValue.ToString());
                     };
                 }
                 else
                 {
-                    listOfNumbers.Add(parsedValue.ToString());
+                    listOfNumbersWithLettersReplaced.Add(parsedValue.ToString());
                 }
             }
 
-            return listOfNumbers;
+            return listOfNumbersWithLettersReplaced;
         }
 
         private List<int> ParseNumbersToInt(List<string> numbers)
@@ -92,7 +94,7 @@ namespace Calculator.Services.Numbers
             return listOfIntNumbers;
         }
 
-        public void CheckForNumbersGreaterThan1000(List<int> numbers)
+        private void CheckForNumbersGreaterThan1000(List<int> numbers)
         {
             var numbersGreaterThan1000 = new List<int>();
 
@@ -108,6 +110,19 @@ namespace Calculator.Services.Numbers
             {
                 throw new NumbersException(ErrorTypes.NumbersGreaterThan1000, numbersGreaterThan1000);
             }
+        }
+
+        private List<int> InvertNegatives(List<int> numbers)
+        {
+            List<int> listOfPositiveNumbers = new(); 
+            foreach (var number in numbers)
+            {
+                var validPositiveNumber = number < 0 ? Math.Abs(number) : number;
+             
+                listOfPositiveNumbers.Add(validPositiveNumber);
+            }
+
+            return listOfPositiveNumbers;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Calculator.Factories
             {
                 Operations.Add => new AdditionNumberService(_delimiterService),
                 Operations.Subtract => new SubtractionNumberService(_delimiterService),
-                _ => throw new Exception("Invalid operation")
+                _ => throw new Exception("Invalid operation provided")
             };
         }
     }
