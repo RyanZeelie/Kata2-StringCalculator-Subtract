@@ -4,7 +4,9 @@
     {
         public string[] GetDelimiters(string inputString)
         {
-            throw new NotImplementedException();
+            var defaultDelimiters = new string[] { ",", "\n" };
+
+            return defaultDelimiters;
         }
     }
 }
