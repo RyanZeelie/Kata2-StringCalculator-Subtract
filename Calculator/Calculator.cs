@@ -17,11 +17,13 @@ namespace Calculator
         public int Add()
         {
             _numberService = _numberServiceFactory.CreateNumberService(Operations.Add);
+            return 1;
         }
 
         public int Subtract()
         {
             _numberService = _numberServiceFactory.CreateNumberService(Operations.Subtract);
+            return 1;
         }
     }
 }
