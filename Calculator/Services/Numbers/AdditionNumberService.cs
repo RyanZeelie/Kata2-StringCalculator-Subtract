@@ -1,4 +1,6 @@
-﻿using Calculator.Services.Delimiters;
+﻿using Calculator.Enums;
+using Calculator.Exceptions;
+using Calculator.Services.Delimiters;
 
 namespace Calculator.Services.Numbers
 {
@@ -8,6 +10,7 @@ namespace Calculator.Services.Numbers
 
         private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "//";
+        private const int MaximumNumber = 1000;
 
         public AdditionNumberService(IDelimiterService delimiterService)
         {
@@ -18,9 +21,9 @@ namespace Calculator.Services.Numbers
         {
             var numbersWithoutDelimiters = RemoveDelimitersFromInputString(inputString);
 
-            var listOfIntNumbers = ParseNumbersToInt(numbersWithoutDelimiters);
+            var listOfValidatedNumbers = ValidateNumbers(numbersWithoutDelimiters);
 
-            return listOfIntNumbers;
+            return listOfValidatedNumbers;
         }
 
         private string[] RemoveDelimitersFromInputString(string inputString)
@@ -38,9 +41,22 @@ namespace Calculator.Services.Numbers
             return inputString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        private List<int> ValidateNumbers(string[] numbers)
+        {
+            List<int> validatedNumbers;
+
+            validatedNumbers = ParseNumbersToInt(numbers);
+
+            validatedNumbers = RemoveNumbersGreaterThan1000(validatedNumbers);
+
+            CheckForNegativeNumbers(validatedNumbers);
+
+            return validatedNumbers;
+        }
+
         private List<int> ParseNumbersToInt(string[] numbers)
         {
-            var listOfNumbers = new List<int>();    
+            var listOfNumbers = new List<int>();
 
             foreach (var number in numbers)
             {
@@ -49,7 +65,40 @@ namespace Calculator.Services.Numbers
                 listOfNumbers.Add(parsedNumber);
             }
 
-            return listOfNumbers;   
+            return listOfNumbers;
+        }
+
+        private List<int> RemoveNumbersGreaterThan1000(List<int> numbers)
+        {
+            var numbersLessThan1000 = new List<int>();
+
+            foreach (var number in numbers)
+            {
+                if (number < MaximumNumber)
+                {
+                    numbersLessThan1000.Add(number);
+                }
+            }
+
+            return numbersLessThan1000;
+        }
+
+        private void CheckForNegativeNumbers(List<int> numbers)
+        {
+            var negativeNumbers = new List<int>();
+
+            foreach (var number in numbers)
+            {
+                if (number < 0)
+                {
+                    negativeNumbers.Add(number);
+                }
+            }
+
+            if (negativeNumbers.Count > 0)
+            {
+                throw new NumbersException(ErrorTypes.NegativeNumbers, negativeNumbers);
+            }
         }
     }
 }

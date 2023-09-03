@@ -1,4 +1,6 @@
-﻿using Calculator.Services.Delimiters;
+﻿using Calculator.Enums;
+using Calculator.Exceptions;
+using Calculator.Services.Delimiters;
 namespace Calculator.Services.Numbers
 {
     public class SubtractionNumberService : INumberService
@@ -7,6 +9,7 @@ namespace Calculator.Services.Numbers
 
         private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "##";
+        private const int MaximumNumber = 1000;
 
         public SubtractionNumberService(IDelimiterService delimiterService)
         {
@@ -19,9 +22,7 @@ namespace Calculator.Services.Numbers
 
             var validatedNumbers = ValidateNumbers(numbersWithoutDelimiters);
 
-            var listOfIntNumbers = ParseNumbersToInt(validatedNumbers);
-
-            return listOfIntNumbers;
+            return validatedNumbers;
         }
 
         private string[] RemoveDelimitersFromInputString(string inputString)
@@ -39,11 +40,15 @@ namespace Calculator.Services.Numbers
             return inputString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private List<string> ValidateNumbers(string[] numbers)
+        private List<int> ValidateNumbers(string[] numbers)
         {
-            var numbersWithLettersRemoved = ReplaceLetters(numbers);
+            var validatedNumbers = ReplaceLetters(numbers);
 
-            return numbersWithLettersRemoved;
+            var parseNumbers = ParseNumbersToInt(validatedNumbers);
+
+            CheckForNumbersGreaterThan1000(parseNumbers);
+
+            return parseNumbers;
         }
 
         private List<string> ReplaceLetters(string[] numbers)
@@ -52,12 +57,21 @@ namespace Calculator.Services.Numbers
 
             foreach (var numberItem in numbers)
             {
-                var letterAsNumericalValue = char.ToLower(char.Parse(numberItem)) - 'a'; ;
+                int parsedValue;
 
-                if (letterAsNumericalValue >= 0 && letterAsNumericalValue < 10)
+                if (!int.TryParse(numberItem, out parsedValue))
                 {
-                    listOfNumbers.Add(letterAsNumericalValue.ToString());
-                };
+                    var letterAsNumericalValue = char.ToLower(char.Parse(numberItem)) - 'a';
+
+                    if (letterAsNumericalValue >= 0 && letterAsNumericalValue < 10)
+                    {
+                        listOfNumbers.Add(letterAsNumericalValue.ToString());
+                    };
+                }
+                else
+                {
+                    listOfNumbers.Add(parsedValue.ToString());
+                }
             }
 
             return listOfNumbers;
@@ -65,16 +79,34 @@ namespace Calculator.Services.Numbers
 
         private List<int> ParseNumbersToInt(List<string> numbers)
         {
-            var listOfNumbers = new List<int>();
+            var listOfIntNumbers = new List<int>();
 
             foreach (var number in numbers)
             {
                 var parsedNumber = int.Parse(number);
 
-                listOfNumbers.Add(parsedNumber);
+                listOfIntNumbers.Add(parsedNumber);
             }
 
-            return listOfNumbers;
+            return listOfIntNumbers;
+        }
+
+        public void CheckForNumbersGreaterThan1000(List<int> numbers)
+        {
+            var numbersGreaterThan1000 = new List<int>();
+
+            foreach(var number in numbers)
+            {
+                if (number > MaximumNumber)
+                {
+                    numbersGreaterThan1000.Add(number);
+                }
+            }
+
+            if (numbersGreaterThan1000.Count > 0)
+            {
+                throw new NumbersException(ErrorTypes.NumbersGreaterThan1000, numbersGreaterThan1000);
+            }
         }
     }
 }

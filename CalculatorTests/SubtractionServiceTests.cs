@@ -1,4 +1,5 @@
-﻿using Calculator.Services.Delimiters;
+﻿using Calculator.Exceptions;
+using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
 namespace CalculatorTests
@@ -83,6 +84,20 @@ namespace CalculatorTests
 
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_NumbersGreaterThan1000_WHEN_SubtractingStringNumbers_THROWS_NumbersExceptionAllNumbersGreaterThan1000()
+        {
+            // Arrange
+            var input = "1,1001,1002";
+            var expectedResult = "The following numbers were greater than 1000 : 1001, 1002";
+
+            // Act
+            var exception = Assert.Throws<NumbersException>(() => _numberService.ParseNumbers(input));
+
+            // Assert
+            Assert.That(exception.Message, Is.EqualTo(expectedResult));
         }
     }
 }

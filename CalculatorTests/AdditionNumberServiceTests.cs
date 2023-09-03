@@ -1,4 +1,5 @@
-﻿using Calculator.Services.Delimiters;
+﻿using Calculator.Exceptions;
+using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
 namespace CalculatorTests
@@ -69,6 +70,34 @@ namespace CalculatorTests
 
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
+        }
+
+        [Test]
+        public void GIVEN_AnegativeNumber_WHEN_ParsingNumbers_THROWS_NumbersException()
+        {
+            // Arrange
+            var testInput = "1,2,-3,4";
+            var expectedResult = "Negatives Are Not Allowed : -3";
+
+            //Act
+            var exception = Assert.Throws<NumbersException>(() => _numberService.ParseNumbers(testInput));
+
+            //Assert
+            Assert.That(exception.Message, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void GIVEN_NumbersGreaterThan1000_WHEN_ParsingNumbers_RETRUNS_ListOfNumbersExcludingThoseGreaterThan1000()
+        {
+            // Arrange
+            var testInput = "1,1001,1002,2";
+            var expectedResult = new List<int>() { 1, 2 };
+
+            //Act
+            var result = _numberService.ParseNumbers(testInput);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(expectedResult));
         }
     }
 }
