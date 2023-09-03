@@ -6,6 +6,9 @@ namespace Calculator.Services.Numbers
     {
         private IDelimiterService _delimiterService;
 
+        private const string DelimiterSeperator = "\n";
+        private const string DelimiterIndicator = "//";
+
         public AdditionNumberService(IDelimiterService delimiterService)
         {
             _delimiterService = delimiterService;
@@ -24,8 +27,15 @@ namespace Calculator.Services.Numbers
         {
             var delimiters = _delimiterService.GetDelimiters(inputString);
 
-            return inputString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            if (inputString.StartsWith(DelimiterIndicator))
+            {
+                var startIndexOfnumbers = inputString.IndexOf(DelimiterSeperator) + 1;
+                var numberSectionOfstring = inputString.Substring(startIndexOfnumbers);
 
+                return numberSectionOfstring.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            return inputString.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private List<int> ParseNumbersToInt(string[] numbers)
