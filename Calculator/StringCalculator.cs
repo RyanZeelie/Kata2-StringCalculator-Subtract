@@ -18,6 +18,11 @@ namespace Calculator
 
         public int Add(string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+            {
+                return DefaultValue;
+            }
+
             _numberService = _numberServiceFactory.CreateNumberService(Operations.Add);
 
             var numbers = _numberService.ParseNumbers(inputString);
@@ -34,6 +39,11 @@ namespace Calculator
 
         public int Subtract(string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+            {
+                return DefaultValue;
+            }
+
             _numberService = _numberServiceFactory.CreateNumberService(Operations.Subtract);
 
             var numbers = _numberService.ParseNumbers(inputString);

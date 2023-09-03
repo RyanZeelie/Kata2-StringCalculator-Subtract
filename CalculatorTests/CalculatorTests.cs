@@ -73,5 +73,22 @@ namespace CalculatorTests
             // Assert
             Assert.That(expectedResult, Is.EqualTo(result));
         }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [Test]
+        public void GIVEN_NullOrEmptyString_WHEN_SubtractingStringNumbers_Returns_Zero(string input)
+        {
+            // Arrange
+            var expectedResult = 0;
+
+            // Act
+            var subtractionResult = _calculator.Subtract(input);
+            var additionResult = _calculator.Add(input);
+
+            // Assert
+            Assert.That(expectedResult, Is.EqualTo(subtractionResult));
+            Assert.That(expectedResult, Is.EqualTo(additionResult));
+        }
     }
 }
