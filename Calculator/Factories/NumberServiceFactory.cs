@@ -1,4 +1,4 @@
-﻿using Calculator.Enums;
+﻿using Calculator.Constants;
 using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
@@ -13,7 +13,7 @@ namespace Calculator.Factories
             _delimiterService  = delimiterService;
         }
 
-        public INumberService CreateNumberService(Operations operation)
+        public INumberService CreateNumberService(string operation)
         {
             return operation switch
             {

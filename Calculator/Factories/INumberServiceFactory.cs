@@ -1,10 +1,9 @@
-﻿using Calculator.Enums;
-using Calculator.Services.Numbers;
+﻿using Calculator.Services.Numbers;
 
 namespace Calculator.Factories
 {
     public interface INumberServiceFactory
     {
-        INumberService CreateNumberService(Operations operation);
+        INumberService CreateNumberService(string operation);
     }
 }

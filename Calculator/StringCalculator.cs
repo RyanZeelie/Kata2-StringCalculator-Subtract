@@ -1,4 +1,4 @@
-﻿using Calculator.Enums;
+﻿using Calculator.Constants;
 using Calculator.Factories;
 using Calculator.Services.Numbers;
 
