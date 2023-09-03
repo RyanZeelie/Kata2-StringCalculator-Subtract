@@ -103,7 +103,6 @@ namespace CalculatorTests
         [TestCase("<{>}##{%}\n2%3%4")]
         [TestCase("<[>}##[%}\n2%3%4")]
         [TestCase("<>><##>%<\n2%3%4")]
-        [Test]
         public void GIVEN_CustomDelimiterSeperators_WHEN_SubtractingStringNumbers_RETURNS_ListOfNumbersAsInt(string input)
         {
             // Arrange
