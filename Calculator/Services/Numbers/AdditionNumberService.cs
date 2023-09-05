@@ -9,7 +9,6 @@ namespace Calculator.Services.Numbers
     {
         private IDelimiterService _delimiterService;
 
-        private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "//";
         private const int MaximumNumber = 1000;
 
