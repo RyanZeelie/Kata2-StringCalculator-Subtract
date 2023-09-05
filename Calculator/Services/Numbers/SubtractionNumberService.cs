@@ -1,4 +1,4 @@
-﻿using Calculator.Constants;
+﻿using Calculator.Enums;
 using Calculator.Exceptions;
 using Calculator.Services.Delimiters;
 namespace Calculator.Services.Numbers

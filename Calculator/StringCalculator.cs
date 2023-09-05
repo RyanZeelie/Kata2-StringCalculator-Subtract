@@ -1,4 +1,4 @@
-﻿using Calculator.Constants;
+﻿using Calculator.Enums;
 using Calculator.Factories;
 using Calculator.Services.Numbers;
 
@@ -7,7 +7,6 @@ namespace Calculator
     public class StringCalculator
     {
         private readonly INumberServiceFactory _numberServiceFactory;
-        private INumberService _numberService;
 
         private const int DefaultValue = 0;
 
@@ -23,9 +22,9 @@ namespace Calculator
                 return DefaultValue;
             }
 
-            _numberService = _numberServiceFactory.CreateNumberService(Operations.Add);
+            var numberService = _numberServiceFactory.CreateNumberService(Operations.Add);
 
-            var numbers = _numberService.ParseNumbers(inputString);
+            var numbers = numberService.ParseNumbers(inputString);
 
             var additionResult = DefaultValue;
 
@@ -44,9 +43,9 @@ namespace Calculator
                 return DefaultValue;
             }
 
-            _numberService = _numberServiceFactory.CreateNumberService(Operations.Subtract);
+            var numberService = _numberServiceFactory.CreateNumberService(Operations.Subtract);
 
-            var numbers = _numberService.ParseNumbers(inputString);
+            var numbers = numberService.ParseNumbers(inputString);
 
             var additionResult = DefaultValue;
 

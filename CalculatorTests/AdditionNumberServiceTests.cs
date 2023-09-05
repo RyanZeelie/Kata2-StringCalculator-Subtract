@@ -1,22 +1,26 @@
-﻿using Calculator.Exceptions;
+﻿using Calculator.Enums;
+using Calculator.Exceptions;
 using Calculator.Factories;
 using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
+using NSubstitute;
 
 namespace CalculatorTests
 {
     [TestFixture]
     public class AdditionNumberServiceTests
     {
-        private INumberServiceFactory _numberServiceFactory;
+        private INumberServiceFactory _mockNumberServiceFactory;
         private INumberService _numberService;
 
 
         [SetUp]
         public void Setup()
         {
-            _numberServiceFactory = new NumberServiceFactory();
-            _numberService = _numberServiceFactory.CreateNumberService("");
+            _mockNumberServiceFactory = Substitute.For<INumberServiceFactory>();
+            _mockNumberServiceFactory.CreateNumberService(Operations.Add).Returns(CreateNumberService());
+
+            _numberService = _mockNumberServiceFactory.CreateNumberService(Operations.Add);
         }
 
         [TestCase("1,2,3")]
@@ -115,6 +119,14 @@ namespace CalculatorTests
 
             //Assert
             Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        private INumberService CreateNumberService()
+        {
+            var delimiterService = new AdditionDelimiterService();
+            var numberService = new AdditionNumberService(delimiterService);
+
+            return numberService;
         }
     }
 }

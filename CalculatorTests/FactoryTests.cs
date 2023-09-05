@@ -1,12 +1,11 @@
-using Calculator.Constants;
+using Calculator.Enums;
 using Calculator.Factories;
-using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
 namespace CalculatorTests
 {
     [TestFixture]
-    public class FactoryTests
+    public class NumberServiceFactoryTests
     {
         private INumberServiceFactory _numberServiceFactory;
 
@@ -17,10 +16,8 @@ namespace CalculatorTests
         }
 
         [Test]
-        public void GIVEN_AddOperationEnum_WHEN_CreatingInstanceOfNumberService_RETURNS_CorrectNumberService()
+        public void GIVEN_AddOperationEnum_WHEN_CreatingInstanceOfNumberService_RETURNS_AdditionNumberService()
         {
-            //Arrange
-
             // Act
             var instanceOfAdditionNumberService = _numberServiceFactory.CreateNumberService(Operations.Add);
 
@@ -30,10 +27,8 @@ namespace CalculatorTests
 
 
         [Test]
-        public void GIVEN_SubtractOperationEnum_WHEN_CreatingInstanceOfNumberService_RETURNS_CorrectNumberService()
+        public void GIVEN_SubtractOperationEnum_WHEN_CreatingInstanceOfNumberService_RETURNS_SubtractionNumberService()
         {
-            //Arrange
-
             // Act
             var instanceOfSubtractionNumberService = _numberServiceFactory.CreateNumberService(Operations.Subtract);
 

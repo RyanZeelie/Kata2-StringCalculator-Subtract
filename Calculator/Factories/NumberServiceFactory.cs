@@ -1,4 +1,4 @@
-﻿using Calculator.Constants;
+﻿using Calculator.Enums;
 using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
@@ -6,7 +6,7 @@ namespace Calculator.Factories
 {
     public class NumberServiceFactory : INumberServiceFactory
     {
-        public INumberService CreateNumberService(string operation)
+        public INumberService CreateNumberService(Operations operation)
         {
             return operation switch
             {

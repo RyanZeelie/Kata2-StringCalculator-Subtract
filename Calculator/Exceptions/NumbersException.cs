@@ -1,16 +1,16 @@
-﻿using Calculator.Constants;
+﻿using Calculator.Enums;
 
 namespace Calculator.Exceptions
 {
     public class NumbersException : Exception
     {
-        public NumbersException(string errorType, List<int> invalidNumbers)
+        public NumbersException(ErrorTypes errorType, List<int> invalidNumbers)
             : base(GetErrorMessage(errorType, invalidNumbers))
         {
 
         }
 
-        private static string GetErrorMessage(string errorType, List<int> invalidNumbers)
+        private static string GetErrorMessage(ErrorTypes errorType, List<int> invalidNumbers)
         {
             switch (errorType)
             {
