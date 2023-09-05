@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Services.Delimiters
 {
-    public class DelimiterService : IDelimiterService
+    public class AdditionDelimiterService : IDelimiterService
     {
         private const string DelimiterSeperator = "\n";
         private const string CustomDelimiterIdentifierIndicator = "<";
@@ -30,7 +30,7 @@
                 delimiterIdenitifiers = ReplaceDefaultDelimiterIdentifiers(input);
 
                 delimiterStartIndex = input.IndexOf(delimiterIndicator) + 2;
-                delimiterEndIndex  = input.IndexOf(DelimiterSeperator);
+                delimiterEndIndex = input.IndexOf(DelimiterSeperator);
             }
 
             var delimiterSectionOfInputString = input.Substring(delimiterStartIndex, delimiterEndIndex);

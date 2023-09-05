@@ -15,8 +15,7 @@ namespace CalculatorTests
         [SetUp] 
         public void SetUp() 
         {
-            var delimiterService = new DelimiterService();
-            _numberServiceFactory = new NumberServiceFactory(delimiterService);
+            _numberServiceFactory = Substitute.For<INumberServiceFactory>();
             _calculator = new StringCalculator(_numberServiceFactory);
         }
 

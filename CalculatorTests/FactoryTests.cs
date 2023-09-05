@@ -13,8 +13,7 @@ namespace CalculatorTests
         [SetUp]
         public void Setup()
         {
-            var delimiterService = new DelimiterService();
-            _numberServiceFactory = new NumberServiceFactory(delimiterService); 
+            _numberServiceFactory = new NumberServiceFactory(); 
         }
 
         [Test]

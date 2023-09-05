@@ -1,4 +1,5 @@
 ﻿using Calculator.Exceptions;
+using Calculator.Factories;
 using Calculator.Services.Delimiters;
 using Calculator.Services.Numbers;
 
@@ -7,13 +8,15 @@ namespace CalculatorTests
     [TestFixture]
     public class AdditionNumberServiceTests
     {
+        private INumberServiceFactory _numberServiceFactory;
         private INumberService _numberService;
+
 
         [SetUp]
         public void Setup()
         {
-            var delimiterService = new DelimiterService();
-            _numberService = new AdditionNumberService(delimiterService);
+            _numberServiceFactory = new NumberServiceFactory();
+            _numberService = _numberServiceFactory.CreateNumberService("");
         }
 
         [TestCase("1,2,3")]

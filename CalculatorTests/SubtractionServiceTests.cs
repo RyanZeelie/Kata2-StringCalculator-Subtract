@@ -12,7 +12,7 @@ namespace CalculatorTests
         [SetUp]
         public void Setup()
         {
-            var delimiterService = new DelimiterService();
+            var delimiterService = new SubtractionDelimiterService();
             _numberService = new SubtractionNumberService(delimiterService);
         }
 
