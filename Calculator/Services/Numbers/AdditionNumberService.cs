@@ -1,5 +1,6 @@
 ﻿using Calculator.Enums;
 using Calculator.Exceptions;
+using Calculator.Helpers;
 using Calculator.Services.Delimiters;
 
 namespace Calculator.Services.Numbers
@@ -32,8 +33,7 @@ namespace Calculator.Services.Numbers
 
             if (inputString.StartsWith(DelimiterIndicator))
             {
-                var startIndexOfnumbers = inputString.IndexOf(DelimiterSeperator) + 1;
-                var numberSectionOfstring = inputString.Substring(startIndexOfnumbers);
+                var numberSectionOfstring = ServiceHelpers.GetNumberSectionOfString(inputString);
 
                 return numberSectionOfstring.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
             }
@@ -45,27 +45,13 @@ namespace Calculator.Services.Numbers
         {
             List<int> validatedNumbers;
 
-            validatedNumbers = ParseNumbersToInt(numbers);
+            validatedNumbers = ServiceHelpers.ParseNumbersToInt(numbers);
 
             validatedNumbers = RemoveNumbersGreaterThan1000(validatedNumbers);
 
             CheckForNegativeNumbers(validatedNumbers);
 
             return validatedNumbers;
-        }
-
-        private List<int> ParseNumbersToInt(string[] numbers)
-        {
-            var listOfNumbers = new List<int>();
-
-            foreach (var number in numbers)
-            {
-                var parsedNumber = int.Parse(number);
-
-                listOfNumbers.Add(parsedNumber);
-            }
-
-            return listOfNumbers;
         }
 
         private List<int> RemoveNumbersGreaterThan1000(List<int> numbers)

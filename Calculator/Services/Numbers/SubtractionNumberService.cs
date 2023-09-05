@@ -1,5 +1,6 @@
 ﻿using Calculator.Enums;
 using Calculator.Exceptions;
+using Calculator.Helpers;
 using Calculator.Services.Delimiters;
 namespace Calculator.Services.Numbers
 {
@@ -7,7 +8,6 @@ namespace Calculator.Services.Numbers
     {
         private IDelimiterService _delimiterService;
 
-        private const string DelimiterSeperator = "\n";
         private const string DelimiterIndicator = "##";
         private const string CustomSeperatorIndicator = "<";
         private const int MaximumNumber = 1000;
@@ -32,8 +32,7 @@ namespace Calculator.Services.Numbers
 
             if (inputString.StartsWith(DelimiterIndicator) || inputString.StartsWith(CustomSeperatorIndicator))
             {
-                var startIndexOfnumbers = inputString.IndexOf(DelimiterSeperator) + 1;
-                var numberSectionOfstring = inputString.Substring(startIndexOfnumbers);
+                var numberSectionOfstring = ServiceHelpers.GetNumberSectionOfString(inputString);
 
                 return numberSectionOfstring.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
             }
@@ -45,7 +44,7 @@ namespace Calculator.Services.Numbers
         {
             var validatedNumbers = ReplaceLetters(numbers);
 
-            var parsedNumbers = ParseNumbersToInt(validatedNumbers);
+            var parsedNumbers = ServiceHelpers.ParseNumbersToInt(validatedNumbers);
 
             CheckForNumbersGreaterThan1000(parsedNumbers);
 
@@ -54,7 +53,7 @@ namespace Calculator.Services.Numbers
             return allPositiveNumbers;
         }
 
-        private List<string> ReplaceLetters(string[] numbers)
+        private string[] ReplaceLetters(string[] numbers)
         {
             var listOfNumbersWithLettersReplaced = new List<string>();
 
@@ -77,21 +76,7 @@ namespace Calculator.Services.Numbers
                 }
             }
 
-            return listOfNumbersWithLettersReplaced;
-        }
-
-        private List<int> ParseNumbersToInt(List<string> numbers)
-        {
-            var listOfIntNumbers = new List<int>();
-
-            foreach (var number in numbers)
-            {
-                var parsedNumber = int.Parse(number);
-
-                listOfIntNumbers.Add(parsedNumber);
-            }
-
-            return listOfIntNumbers;
+            return listOfNumbersWithLettersReplaced.ToArray();
         }
 
         private void CheckForNumbersGreaterThan1000(List<int> numbers)

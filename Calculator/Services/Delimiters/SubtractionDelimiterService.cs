@@ -18,9 +18,9 @@
             return delimiters.ToArray();
         }
 
-        private List<string> GetCustomDelimiters(string input, string delimiterIndicator)
+        private string[] GetCustomDelimiters(string input, string delimiterIndicator)
         {
-            var delimiterIdenitifiers = new List<string>() { "[", "]", "][" };
+            var delimiterIdenitifiers = new string[] { "[", "]", "][" };
 
             var delimiterStartIndex = 2;
             var delimiterEndIndex = input.IndexOf(DelimiterSeperator) - 2;
@@ -35,18 +35,18 @@
 
             var delimiterSectionOfInputString = input.Substring(delimiterStartIndex, delimiterEndIndex);
 
-            var delimiters = delimiterSectionOfInputString.Split(delimiterIdenitifiers.ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            var delimiters = delimiterSectionOfInputString.Split(delimiterIdenitifiers, StringSplitOptions.RemoveEmptyEntries);
 
-            return delimiters.ToList();
+            return delimiters;
         }
 
-        private List<string> ReplaceDefaultDelimiterIdentifiers(string input)
+        private string[] ReplaceDefaultDelimiterIdentifiers(string input)
         {
             var newDelimiterIdentifiersStartCharacter = input[1].ToString();
             var newDelimiterIdentifiersEndCharacter = input[3].ToString();
 
             return
-                new List<string>()
+                new string[]
                 {
                     newDelimiterIdentifiersStartCharacter,
                     newDelimiterIdentifiersEndCharacter,
