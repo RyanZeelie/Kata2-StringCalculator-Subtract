@@ -21,7 +21,7 @@ namespace Calculator.Exceptions
                     return string.Format($"The following numbers were greater than 1000 : {string.Join(", ", invalidNumbers)}");
 
                 default:
-                    return "An unknown error occurred.";
+                    throw new ArgumentException($"Unsupported Error Type: {errorType}");
             }
         }
     }
